@@ -61,6 +61,12 @@ export default function ServiceSelectionScreen() {
     }
   };
 
+  // Chunk services into strict pairs of 2 so each row is always guaranteed 2 columns
+  const serviceRows: ServiceItem[][] = [];
+  for (let i = 0; i < SERVICES.length; i += 2) {
+    serviceRows.push(SERVICES.slice(i, i + 2));
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Top Header Bar */}
@@ -92,17 +98,25 @@ export default function ServiceSelectionScreen() {
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Tap to add</Text>
 
+          {/* Strictly 2-column Grid */}
           <View style={styles.servicesGrid}>
-            {SERVICES.map((service) => (
-              <TouchableOpacity
-                key={service.id}
-                style={styles.serviceCard}
-                activeOpacity={0.7}
-                onPress={() => handleAddService(service)}
-              >
-                <Text style={styles.serviceName}>{service.name}</Text>
-                <Text style={styles.servicePrice}>${service.price}</Text>
-              </TouchableOpacity>
+            {serviceRows.map((row, rowIndex) => (
+              <View key={rowIndex} style={styles.serviceRow}>
+                {row.map((service) => (
+                  <TouchableOpacity
+                    key={service.id}
+                    style={styles.serviceCard}
+                    activeOpacity={0.7}
+                    onPress={() => handleAddService(service)}
+                  >
+                    <Text style={styles.serviceName} numberOfLines={1}>
+                      {service.name}
+                    </Text>
+                    <Text style={styles.servicePrice}>${service.price}</Text>
+                  </TouchableOpacity>
+                ))}
+                {row.length === 1 && <View style={styles.serviceCardEmpty} />}
+              </View>
             ))}
           </View>
 
@@ -176,10 +190,10 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     paddingTop: 8,
     paddingBottom: 12,
-    gap: 12,
+    gap: 10,
   },
   backButton: {
     width: 44,
@@ -214,7 +228,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     paddingTop: 8,
     paddingBottom: 24,
   },
@@ -228,19 +242,26 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   servicesGrid: {
+    width: '100%',
+  },
+  serviceRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     gap: 10,
+    marginBottom: 10,
+    width: '100%',
   },
   serviceCard: {
+    flex: 1,
     backgroundColor: COLORS.white,
     borderRadius: 14,
     borderWidth: 1,
     borderColor: COLORS.border,
-    width: '48.5%',
     paddingHorizontal: 14,
     paddingVertical: 12,
     alignItems: 'flex-start',
+  },
+  serviceCardEmpty: {
+    flex: 1,
   },
   serviceName: {
     fontSize: 15,
@@ -264,7 +285,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: COLORS.borderDashed,
     borderStyle: 'dashed',
-    marginTop: 10,
+    marginTop: 4,
     width: '100%',
   },
   otherPriceText: {
@@ -316,7 +337,7 @@ const styles = StyleSheet.create({
   bottomBar: {
     flexDirection: 'row',
     gap: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     paddingVertical: 12,
     backgroundColor: COLORS.background,
     borderTopWidth: 1,
@@ -327,7 +348,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1.5,
     borderColor: COLORS.border,
-    width: 96,
+    width: 90,
     height: 54,
     justifyContent: 'center',
     alignItems: 'center',

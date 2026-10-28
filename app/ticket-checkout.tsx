@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   header: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     paddingTop: 8,
     paddingBottom: 8,
   },
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     alignItems: 'center',
     paddingTop: 8,
   },
@@ -178,12 +178,13 @@ const styles = StyleSheet.create({
   },
   tipOptions: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 6,
     width: '100%',
   },
   tipButton: {
     flex: 1,
     height: 46,
+    paddingHorizontal: 4,
     backgroundColor: COLORS.white,
     borderWidth: 1.5,
     borderColor: COLORS.border,
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
   },
   tipText: {
-    fontSize: 14,
+    fontSize: 13,
     color: COLORS.text,
     fontFamily: FONTS.bold,
   },
